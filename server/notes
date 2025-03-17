@@ -13,7 +13,7 @@ Game Events
 		If uploadImage is true, return image token. 
 		Make img filename the image token.	
 	Join Game -> Start WS Connection
-	Start Game	
+	Start Game -> Only when game is started can players join. Init ws connection between host
 	Show Question (from host user) verify game and hostuser id 
 		WS Send Next Question to all players	
 	Submit Question (from host user) verify game and hostuser id
