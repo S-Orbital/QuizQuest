@@ -1,0 +1,22 @@
+
+Game Events
+	Create Game -> Start WS Connection
+	Upload Question -> POST Request with Json
+		{
+			queston : String,
+			a : String,
+			b : String,
+			c : String,
+			d : String,
+			uploadImage : boolean, 
+		}
+		If uploadImage is true, return image token. 
+		Make img filename the image token.	
+	Join Game -> Start WS Connection
+	Start Game	
+	Show Question (from host user) verify game and hostuser id 
+		WS Send Next Question to all players	
+	Submit Question (from host user) verify game and hostuser id
+
+
+

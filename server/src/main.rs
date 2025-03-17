@@ -1,4 +1,6 @@
 #[macro_use] extern crate rocket;
+mod db;
+
 
 struct Question {
     question: String,
@@ -7,12 +9,11 @@ struct Question {
     b: String,
     c: String,
     d: String,
-
 }
 
 struct Game {
-    hostUser : String,
-    gameID : String,
+    host_user : String,
+    game_id : String,
     players : Vec<String>, // string is userID/Token
 }
 
@@ -25,4 +26,7 @@ fn index() -> &'static str {
 fn rocket() -> _ {
     rocket::build().mount("/", routes![index])
 }
+
+
+
 
