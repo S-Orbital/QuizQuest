@@ -19,4 +19,9 @@ Game Events
 	Submit Question (from host user) verify game and hostuser id
 
 
+users.db -> Tables
+	host_users
+
+	users
+
 
