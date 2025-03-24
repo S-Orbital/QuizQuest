@@ -1,34 +1,50 @@
-#[macro_use] extern crate rocket;
+mod data;
 mod db;
 
-struct Question {
-    question: String,
-    images : Option<Vec<String>>, // contains image paths 
-    a : String,
-    b: String,
-    c: String,
-    d: String,
+use std::collections::HashMap;
+
+use axum::{
+    extract::ws::{WebSocket, WebSocketUpgrade}, 
+    response::{IntoResponse, Response}, 
+    routing::{any, get, post}, 
+    Json, 
+    Router
+};
+
+use serde_json::{Value, json};
+use once_cell::sync::Lazy;
+use tokio::sync::{RwLock, Mutex};
+use std::sync::Arc;
+
+
+// declare websocket handler
+// gameID, websocket vec 
+static WEBSOCKET_MAP : Lazy<RwLock<HashMap<String, Vec<Arc<Mutex<WebSocket>>>>>> = Lazy::new(|| {
+    RwLock::new(HashMap::new())
+});
+
+
+
+#[tokio::main]
+async fn main() {
+    
+    db::init();
+    
+    // 2 websocket endpoints 
+    // one for host user
+    // one for client
+
+    let app = Router::new()
+        .route("/", post(root));
+
+
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    axum::serve(listener, app).await.unwrap();
 }
 
-struct Game {
-    host_user_token : String,
-    game_id : String,
-    player_token : Vec<String>, // string is userID/Token
-}
+async fn root(Json(payload): Json<serde_json::Value>) -> Json<Value>{
 
-struct player {
-    player_token : String,
-    // ws connection handle
-}
-
-#[get("/")]
-fn index() -> &'static str {
-    "server"
-}
-
-#[launch]
-fn rocket() -> _ {
-    rocket::build().mount("/", routes![index])
+    Json(json!({"message": "this is a json return resposne"}))
 }
 
 
